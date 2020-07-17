@@ -2,14 +2,12 @@ exports.up = function (knex) {
   return knex.schema
     .createTable("projects", (tbl) => {
       tbl.increments();
-
       tbl.string("name").notNullable();
       tbl.string("description");
       tbl.boolean("completed").defaultTo(0);
     })
     .createTable("tasks", (tbl) => {
       tbl.increments();
-
       tbl.string("description").notNullable();
       tbl.string("notes");
       tbl.boolean("completed").defaultTo(0);
@@ -17,11 +15,10 @@ exports.up = function (knex) {
       tbl
         .integer("project_id")
         .unsigned()
-        // Avoids setting negative numbers
         .notNullable()
         .references("id")
         .inTable("projects")
-        .onUpdate("CASCADE") // RESTRICT, DO NOTHING, SET NULL, CASCADE
+        .onUpdate("CASCADE")
         .onDelete("RESTRICT");
     })
     .createTable("resources", (tbl) => {
